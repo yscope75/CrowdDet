@@ -11,13 +11,14 @@ root_dir = '../../'
 add_path(os.path.join(root_dir))
 add_path(os.path.join(root_dir, 'lib'))
 
-class Crowd_human:
-    class_names = ['background', 'person']
+class Wider_person:
+    class_names = ['pedestrians', 'riders','partially-visible persons', 'ignore regions','crowd']
     num_classes = len(class_names)
-    root_folder = '/data/CrowdHuman'
-    image_folder = '/data/CrowdHuman/images'
-    train_source = os.path.join('/data/CrowdHuman/annotation_train.odgt')
-    eval_source = os.path.join('/data/CrowdHuman/annotation_val.odgt')
+    root_folder = '/data/WiderPerson'
+    image_folder = '/data/WiderPerson/images'
+    annotations_root = '/data/WiderPerson/Annotations'
+    train_source = os.path.join('/data/WiderPerson/train.txt')
+    eval_source = os.path.join('/data/CrowdHuman/val.txt')
 
 class Config:
     output_dir = 'outputs'
@@ -34,11 +35,12 @@ class Config:
     eval_image_short_size = 800
     eval_image_max_size = 1400
     seed_dataprovider = 3
-    train_source = Crowd_human.train_source
-    eval_source = Crowd_human.eval_source
-    image_folder = Crowd_human.image_folder
-    class_names = Crowd_human.class_names
-    num_classes = Crowd_human.num_classes
+    train_source = Wider_person.train_source
+    eval_source = Wider_person.eval_source
+    image_folder = Wider_person.image_folder
+    class_names = Wider_person.class_names
+    num_classes = Wider_person.num_classes
+    annotations_root = Wider_person.annotations_root
     class_names2id = dict(list(zip(class_names, list(range(num_classes)))))
     gt_boxes_name = 'fbox'
 

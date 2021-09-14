@@ -5,7 +5,7 @@ import torch
 
 sys.path.insert(0, '../lib')
 sys.path.insert(0, '../model')
-from data.CrowdHuman import CrowdHuman
+from data.WiderPerson import WiderPerson
 from utils import misc_utils, SGD_bias
 
 class Train_config:
@@ -99,11 +99,11 @@ def train_worker(rank, train_config, network, config):
     # using distributed data parallel
     net = torch.nn.parallel.DistributedDataParallel(net, device_ids=[rank], broadcast_buffers=False)
     # build data provider
-    crowdhuman = CrowdHuman(config, if_train=True)
-    data_iter = torch.utils.data.DataLoader(dataset=crowdhuman,
+    widerperson = WiderPerson(config, if_train=True)
+    data_iter = torch.utils.data.DataLoader(dataset=widerperson,
             batch_size=train_config.mini_batch_size,
             num_workers=2,
-            collate_fn=crowdhuman.merge_batch,
+            collate_fn=widerperson.merge_batch,
             shuffle=True)
     for epoch_id in range(begin_epoch, train_config.total_epoch+1):
         do_train_epoch(net, data_iter, optimizer, rank, epoch_id, train_config)

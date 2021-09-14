@@ -7,6 +7,13 @@ def load_img(image_path):
     img = cv2.imread(image_path, cv2.IMREAD_COLOR)
     return img
 
+def load_lines(source):
+  assert os.path.exists(source)
+  with open(source, 'r') as f:
+    lines = f.readlines()
+
+  return [line.strip('\n') for line in lines]
+
 def load_json_lines(fpath):
     assert os.path.exists(fpath)
     with open(fpath,'r') as fid:
@@ -92,6 +99,28 @@ def load_gt(dict_input, key_name, key_box, class_names):
         bbox.append(np.hstack((rb[key_box], tag)))
     bboxes = np.vstack(bbox).astype(np.float64)
     return bboxes
+
+def load_bb(annotation_root, id):
+  link_to_ann = os.path.join(annotation_root, id+'.jpg.txt')
+  assert os.path.exists(link_to_ann)
+  with open(link_to_ann, 'r') as f:
+    lines = f.readlines()
+    
+  if int(lines[0].strip('\n')) == 0:
+    return np.empty([0, 5])
+  
+  bbox = [] 
+  for line in lines[1:]:
+    box = []
+    for idx, i in enumerate(map(int, line.strip('\n').split())):
+      if idx == 0:
+        tag = i-1
+      else:
+        box.append(i)
+    bbox.append(np.hstack((box, tag)))
+  
+  bboxes = xyxy_to_xywh(np.vstack(bbox).astype(np.float64))
+  return bboxes
 
 def boxes_dump(boxes, is_gt):
     result = []

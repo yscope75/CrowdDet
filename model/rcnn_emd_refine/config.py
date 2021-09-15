@@ -14,17 +14,17 @@ add_path(os.path.join(root_dir, 'lib'))
 class Wider_person:
     class_names = ['pedestrians', 'riders','partially-visible persons', 'ignore regions','crowd']
     num_classes = len(class_names)
-    root_folder = '/data/WiderPerson'
-    image_folder = '/data/WiderPerson/images'
-    annotations_root = '/data/WiderPerson/Annotations'
-    train_source = os.path.join('/data/WiderPerson/train.txt')
-    eval_source = os.path.join('/data/WiderPerson/val.txt')
+    root_folder = '../lib/data/WiderPerson'
+    image_folder = '../lib/data/WiderPerson/images'
+    annotations_root = '../lib/data/WiderPerson/Annotations'
+    train_source = os.path.join('../lib/data/WiderPerson/train.txt')
+    eval_source = os.path.join('../lib/data/WiderPerson/val.txt')
 
 class Config:
     output_dir = 'outputs'
     model_dir = os.path.join(output_dir, 'model_dump')
     eval_dir = os.path.join(output_dir, 'eval_dump')
-    init_weights = '/data/model/resnet50_fbaug.pth'
+    init_weights = '../lib/data/model/resnet50_fbaug.pth'
 
     # ----------data config---------- #
     image_mean = np.array([103.530, 116.280, 123.675])

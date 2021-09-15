@@ -5,7 +5,7 @@ import numpy as np
 
 from utils import misc_utils
 
-class CrowdHuman(torch.utils.data.Dataset):
+class WiderPerson(torch.utils.data.Dataset):
     def __init__(self, config, if_train):
         if if_train:
             self.training = True

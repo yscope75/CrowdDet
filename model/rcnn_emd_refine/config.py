@@ -12,10 +12,10 @@ add_path(os.path.join(root_dir))
 add_path(os.path.join(root_dir, 'lib'))
 
 class Wider_person:
-    class_names = ['pedestrians', 'riders','partially-visible persons', 'ignore regions','crowd']
+    class_names = ['background', 'person']
     num_classes = len(class_names)
     root_folder = '../lib/data/WiderPerson'
-    image_folder = '../lib/data/WiderPerson/images'
+    image_folder = '../lib/data/WiderPerson/Images'
     annotations_root = '../lib/data/WiderPerson/Annotations'
     train_source = os.path.join('../lib/data/WiderPerson/train.txt')
     eval_source = os.path.join('../lib/data/WiderPerson/val.txt')
@@ -48,7 +48,7 @@ class Config:
     backbone_freeze_at = 2
     rpn_channel = 256
     
-    train_batch_per_gpu = 2
+    train_batch_per_gpu = 8
     momentum = 0.9
     weight_decay = 1e-4
     base_lr = 1e-3 * 1.25

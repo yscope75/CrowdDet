@@ -114,7 +114,7 @@ def load_bb(annotation_root, id):
     box = []
     for idx, i in enumerate(map(int, line.strip('\n').split())):
       if idx == 0:
-        if i in {1,2,3,5}
+        if i in {1,2,3,5}:
             tag = 1
         else:
             tag = -1

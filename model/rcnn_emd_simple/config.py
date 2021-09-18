@@ -11,19 +11,20 @@ root_dir = '../../'
 add_path(os.path.join(root_dir))
 add_path(os.path.join(root_dir, 'lib'))
 
-class Crowd_human:
+class Wider_person:
     class_names = ['background', 'person']
     num_classes = len(class_names)
-    root_folder = '/data/CrowdHuman'
-    image_folder = '/data/CrowdHuman/images'
-    train_source = os.path.join('/data/CrowdHuman/annotation_train.odgt')
-    eval_source = os.path.join('/data/CrowdHuman/annotation_val.odgt')
+    root_folder = '../lib/data/WiderPerson'
+    image_folder = '../lib/data/WiderPerson/Images'
+    annotations_root = '../lib/data/WiderPerson/Annotations'
+    train_source = os.path.join('../lib/data/WiderPerson/train.txt')
+    eval_source = os.path.join('../lib/data/WiderPerson/val.txt')
 
 class Config:
     output_dir = 'outputs'
     model_dir = os.path.join(output_dir, 'model_dump')
     eval_dir = os.path.join(output_dir, 'eval_dump')
-    init_weights = '/data/model/resnet50_fbaug.pth'
+    init_weights = '../lib/data/model/resnet50_fbaug.pth'
 
     # ----------data config---------- #
     image_mean = np.array([103.530, 116.280, 123.675])
@@ -34,11 +35,12 @@ class Config:
     eval_image_short_size = 800
     eval_image_max_size = 1400
     seed_dataprovider = 3
-    train_source = Crowd_human.train_source
-    eval_source = Crowd_human.eval_source
-    image_folder = Crowd_human.image_folder
-    class_names = Crowd_human.class_names
-    num_classes = Crowd_human.num_classes
+    train_source = Wider_person.train_source
+    eval_source = Wider_person.eval_source
+    image_folder = Wider_person.image_folder
+    class_names = Wider_person.class_names
+    num_classes = Wider_person.num_classes
+    annotations_root = Wider_person.annotations_root
     class_names2id = dict(list(zip(class_names, list(range(num_classes)))))
     gt_boxes_name = 'fbox'
 
@@ -46,13 +48,13 @@ class Config:
     backbone_freeze_at = 2
     rpn_channel = 256
     
-    train_batch_per_gpu = 2
+    train_batch_per_gpu = 8
     momentum = 0.9
     weight_decay = 1e-4
     base_lr = 1e-3 * 1.25
 
     warm_iter = 800
-    max_epoch = 30
+    max_epoch = 5
     lr_decay = [24, 27]
     nr_images_epoch = 15000
     log_dump_interval = 20

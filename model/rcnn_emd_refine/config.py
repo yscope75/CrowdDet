@@ -18,7 +18,7 @@ class Wider_person:
     image_folder = '../lib/data/WiderPerson/Images'
     annotations_root = '../lib/data/WiderPerson/Annotations'
     train_source = os.path.join('../lib/data/WiderPerson/train.txt')
-    eval_source = os.path.join('../lib/data/WiderPerson/test.txt')
+    eval_source = os.path.join('../lib/data/WiderPerson/val.txt')
 
 class Config:
     output_dir = 'outputs'

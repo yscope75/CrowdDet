@@ -58,7 +58,7 @@ def eval_all(args, config, network):
     res_line, JI = compute_JI.evaluation_all(fpath, 'box')
     for line in res_line:
         eval_fid.write(line+'\n')
-    AP, MR = compute_APMR.compute_APMR(fpath, config.eval_source, config.annotations_root, 'box')
+    AP, MR = compute_APMR.compute_APMR(fpath, config.eval_source, 'box', config.annotations_root, )
     line = 'AP:{:.4f}, MR:{:.4f}, JI:{:.4f}.'.format(AP, MR, JI)
     print(line)
     eval_fid.write(line+'\n')

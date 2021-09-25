@@ -23,9 +23,6 @@ class Database(object):
 
     def loadData(self, fpath, body_key=None, head_key=None, if_gt=True):
         assert os.path.isfile(fpath), fpath + " does not exist!"
-        with open(fpath, "r") as f:
-            lines = f.readlines()
-        records = [line.strip('\n') for line in lines]
         if if_gt:
             with open(fpath, "r") as f:
                 lines = f.readlines()

@@ -261,7 +261,8 @@ class Image(object):
             bbox.append(np.hstack((box, tag)))
       
         # bboxes = xyxy_to_xywh(np.vstack(bbox).astype(np.float64))
-        return bboxes, None
+        bbox = np.array(bbox)
+        return bbox, None
 
     def load_det_boxes(self, dict_input, key_name, key_box, key_score=None, key_tag=None):
         assert key_name in dict_input

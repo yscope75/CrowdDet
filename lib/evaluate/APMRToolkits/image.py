@@ -17,15 +17,15 @@ class Image(object):
         """
         :meth: read the object from a dict
         """
-        if "ID" in record and self.ID is None:
-            self.ID = record['ID']
+        # if "ID" in record and self.ID is None:
+        self.ID = record['ID']
         if "width" in record and self._width is None:
             self._width = record["width"]
         if "height" in record and self._height is None:
             self._height = record["height"]
         if gtflag:
-            self._gtNum = len(record["gtboxes"])
-            body_bbox, head_bbox = self.load_gt_boxes(record, 'gtboxes', class_names)
+            # self._gtNum = len(record["gtboxes"])
+            body_bbox, head_bbox = self.load_body_boxes(record, 'gtboxes', class_names)
             if self.eval_mode == 0:
                 self.gtboxes = body_bbox
                 self._ignNum = (body_bbox[:, -1] == -1).sum()
@@ -230,6 +230,31 @@ class Image(object):
         body_bbox = np.array(body_bbox)
         body_bbox[:, 2:4] += body_bbox[:, :2]
         return body_bbox, head_bbox
+
+    def load_body_boxes(self, annotation_root, id)
+        link_to_ann = os.path.join(annotation_root, id+'.jpg.txt')
+          assert os.path.exists(link_to_ann)
+          with open(link_to_ann, 'r') as f:
+            lines = f.readlines()
+            
+          if int(lines[0].strip('\n')) == 0:
+            return np.empty([0, 5])
+          
+          bbox = [] 
+          for line in lines[1:]:
+            box = []
+            for idx, i in enumerate(map(int, line.strip('\n').split())):
+              if idx == 0:
+                if i in {1,2,3}:
+                    tag = 1
+                else:
+                    tag = -1
+              else:
+                box.append(i)
+            bbox.append(np.hstack((box, tag)))
+          
+          # bboxes = xyxy_to_xywh(np.vstack(bbox).astype(np.float64))
+          return bboxes, None
 
     def load_det_boxes(self, dict_input, key_name, key_box, key_score=None, key_tag=None):
         assert key_name in dict_input

@@ -10,7 +10,7 @@ from torch.multiprocessing import Queue, Process
 
 sys.path.insert(0, '../lib')
 sys.path.insert(0, '../model')
-from data.CrowdHuman import CrowdHuman
+from data.WiderPerson import WiderPerson
 from utils import misc_utils, nms_utils
 from evaluate import compute_JI, compute_APMR
 
@@ -26,11 +26,11 @@ def eval_all(args, config, network):
     str_devices = args.devices
     devices = misc_utils.device_parser(str_devices)
     # load data
-    crowdhuman = CrowdHuman(config, if_train=False)
+    widerPerson = WiderPerson(config, if_train=False)
     #crowdhuman.records = crowdhuman.records[:10]
     # multiprocessing
     num_devs = len(devices)
-    len_dataset = len(crowdhuman)
+    len_dataset = len(widerPerson)
     num_image = math.ceil(len_dataset / num_devs)
     result_queue = Queue(500)
     procs = []
@@ -39,7 +39,7 @@ def eval_all(args, config, network):
         start = i * num_image
         end = min(start + num_image, len_dataset)
         proc = Process(target=inference, args=(
-                config, network, model_file, devices[i], crowdhuman, start, end, result_queue))
+                config, network, model_file, devices[i], widerPerson, start, end, result_queue))
         proc.start()
         procs.append(proc)
     pbar = tqdm(total=len_dataset, ncols=50)
@@ -116,7 +116,8 @@ def inference(config, network, model_file, device, dataset, start, end, result_q
         pred_boxes[:, 2:4] -= pred_boxes[:, :2]
         gt_boxes = gt_boxes[0].numpy()
         gt_boxes[:, 2:4] -= gt_boxes[:, :2]
-        result_dict = dict(ID=ID[0], height=int(im_info[0, -3]), width=int(im_info[0, -2]),
+        print(ID[0])
+        result_dict = dict(ID=ID, height=int(im_info[0, -3]), width=int(im_info[0, -2]),
                 dtboxes=boxes_dump(pred_boxes), gtboxes=boxes_dump(gt_boxes))
         result_queue.put_nowait(result_dict)
 

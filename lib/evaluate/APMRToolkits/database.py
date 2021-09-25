@@ -27,8 +27,8 @@ class Database(object):
         records = [json.loads(line.strip('\n')) for line in lines]
         if if_gt:
             for record in records:
-                self.images[record["ID"]] = Image(self.eval_mode)
-                self.images[record["ID"]].load(record, body_key, head_key, PERSON_CLASSES, True)
+                self.images[record] = Image(self.eval_mode)
+                self.images[record].load(record, body_key, head_key, PERSON_CLASSES, True)
         else:
             for record in records:
                 self.images[record["ID"]].load(record, body_key, head_key, PERSON_CLASSES, False)

@@ -19,8 +19,9 @@ class Database(object):
         self._gtNum = sum([self.images[i]._gtNum for i in self.images])
         self._imageNum = len(self.images)
         self.scorelist = None
+        self.anno_root =anno_root
 
-    def loadData(self, fpath, body_key=None, head_key=None, anno_root, if_gt=True):
+    def loadData(self, fpath, body_key=None, head_key=None, if_gt=True):
         assert os.path.isfile(fpath), fpath + " does not exist!"
         with open(fpath, "r") as f:
             lines = f.readlines()
@@ -28,7 +29,7 @@ class Database(object):
         if if_gt:
             for record in records:
                 self.images[record] = Image(self.eval_mode)
-                self.images[record].load(record, body_key, head_key, PERSON_CLASSES, True)
+                self.images[record].load(record, body_key, head_key, self.anno_root, PERSON_CLASSES, True)
         else:
             for record in records:
                 self.images[record["ID"]].load(record, body_key, head_key, PERSON_CLASSES, False)

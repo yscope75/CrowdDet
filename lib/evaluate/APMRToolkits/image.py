@@ -233,15 +233,15 @@ class Image(object):
 
     def load_body_boxes(self, annotation_root, id):
         link_to_ann = os.path.join(annotation_root, id+'.jpg.txt')
-          assert os.path.exists(link_to_ann)
-          with open(link_to_ann, 'r') as f:
+        assert os.path.exists(link_to_ann)
+        with open(link_to_ann, 'r') as f:
             lines = f.readlines()
-            
-          if int(lines[0].strip('\n')) == 0:
+    
+        if int(lines[0].strip('\n')) == 0:
             return np.empty([0, 5])
-          
-          bbox = [] 
-          for line in lines[1:]:
+      
+        bbox = [] 
+        for line in lines[1:]:
             box = []
             for idx, i in enumerate(map(int, line.strip('\n').split())):
               if idx == 0:
@@ -252,9 +252,9 @@ class Image(object):
               else:
                 box.append(i)
             bbox.append(np.hstack((box, tag)))
-          
-          # bboxes = xyxy_to_xywh(np.vstack(bbox).astype(np.float64))
-          return bboxes, None
+      
+        # bboxes = xyxy_to_xywh(np.vstack(bbox).astype(np.float64))
+        return bboxes, None
 
     def load_det_boxes(self, dict_input, key_name, key_box, key_score=None, key_tag=None):
         assert key_name in dict_input

@@ -12,6 +12,7 @@ class Database(object):
         """
         self.images = dict()
         self.eval_mode = mode
+        self.anno_root = anno_root
         self.loadData(gtpath, body_key, head_key, True)
         self.loadData(dtpath, body_key, head_key, False)
 
@@ -19,7 +20,6 @@ class Database(object):
         self._gtNum = sum([self.images[i]._gtNum for i in self.images])
         self._imageNum = len(self.images)
         self.scorelist = None
-        self.anno_root =anno_root
 
     def loadData(self, fpath, body_key=None, head_key=None, if_gt=True):
         assert os.path.isfile(fpath), fpath + " does not exist!"

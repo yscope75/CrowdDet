@@ -1,4 +1,5 @@
 import numpy as np
+import os 
 
 class Image(object):
     def __init__(self, mode):
@@ -30,7 +31,7 @@ class Image(object):
               first_line = f.readline()
 
             self._gtNum = int(first_line.strip('\n'))
-            
+
             body_bbox, head_bbox = self.load_body_boxes(anno_root, record)
             if self.eval_mode == 0:
                 self.gtboxes = body_bbox

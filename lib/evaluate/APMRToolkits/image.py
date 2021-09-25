@@ -239,7 +239,7 @@ class Image(object):
         return body_bbox, head_bbox
 
     def load_body_boxes(self, annotation_root, id):
-        link_to_ann = os.path.join(annotation_root, id+'.jpg.txt')
+        link_to_ann = os.path.join('../lib/data/WiderPerson/Annotations/', id+'.jpg.txt')
         assert os.path.exists(link_to_ann)
         with open(link_to_ann, 'r') as f:
             lines = f.readlines()

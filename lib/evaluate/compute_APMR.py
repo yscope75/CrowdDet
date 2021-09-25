@@ -2,8 +2,8 @@ import argparse
 from .APMRToolkits import *
 
 dbName = 'human'
-def compute_APMR(dt_path, gt_path, target_key=None, mode=0):
-    database = Database(gt_path, dt_path, target_key, None, mode)
+def compute_APMR(dt_path, gt_path, target_key=None, anno_root=None, mode=0):
+    database = Database(gt_path, dt_path, target_key, anno_root, None, mode)
     database.compare()
     mAP,_ = database.eval_AP()
     mMR,_ = database.eval_MR()

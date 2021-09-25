@@ -13,7 +13,7 @@ class Image(object):
         self._gtNum = None
         self._dtNum = None
 
-    def load(self, record, body_key, head_key, class_names, gtflag):
+    def load(self, record, body_key, head_key, anno_root, class_names, gtflag):
         """
         :meth: read the object from a dict
         """
@@ -25,7 +25,7 @@ class Image(object):
             self._height = record["height"]
         if gtflag:
             # self._gtNum = len(record["gtboxes"])
-            body_bbox, head_bbox = self.load_body_boxes(record, 'gtboxes', class_names)
+            body_bbox, head_bbox = self.load_body_boxes(anno_root, record)
             if self.eval_mode == 0:
                 self.gtboxes = body_bbox
                 self._ignNum = (body_bbox[:, -1] == -1).sum()
@@ -231,7 +231,7 @@ class Image(object):
         body_bbox[:, 2:4] += body_bbox[:, :2]
         return body_bbox, head_bbox
 
-    def load_body_boxes(self, annotation_root, id)
+    def load_body_boxes(self, annotation_root, id):
         link_to_ann = os.path.join(annotation_root, id+'.jpg.txt')
           assert os.path.exists(link_to_ann)
           with open(link_to_ann, 'r') as f:

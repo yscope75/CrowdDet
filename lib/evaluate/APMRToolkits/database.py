@@ -6,7 +6,7 @@ from .image import *
 PERSON_CLASSES = ['background', 'person']
 # DBBase
 class Database(object):
-    def __init__(self, gtpath=None, dtpath=None, body_key=None, head_key=None, mode=0):
+    def __init__(self, gtpath=None, dtpath=None, body_key=None, anno_root=None, head_key=None, mode=0):
         """
         mode=0: only body; mode=1: only head
         """
@@ -20,7 +20,7 @@ class Database(object):
         self._imageNum = len(self.images)
         self.scorelist = None
 
-    def loadData(self, fpath, body_key=None, head_key=None, if_gt=True):
+    def loadData(self, fpath, body_key=None, head_key=None, anno_root, if_gt=True):
         assert os.path.isfile(fpath), fpath + " does not exist!"
         with open(fpath, "r") as f:
             lines = f.readlines()

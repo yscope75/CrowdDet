@@ -25,7 +25,7 @@ class Database(object):
         assert os.path.isfile(fpath), fpath + " does not exist!"
         with open(fpath, "r") as f:
             lines = f.readlines()
-        records = [json.loads(line.strip('\n')) for line in lines]
+        records = [line.strip('\n') for line in lines]
         if if_gt:
             for record in records:
                 self.images[record] = Image(self.eval_mode)

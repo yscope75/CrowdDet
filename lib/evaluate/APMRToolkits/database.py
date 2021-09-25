@@ -27,12 +27,18 @@ class Database(object):
             lines = f.readlines()
         records = [line.strip('\n') for line in lines]
         if if_gt:
+            with open(fpath, "r") as f:
+                lines = f.readlines()
+            records = [line.strip('\n') for line in lines]
             for record in records:
                 self.images[record] = Image(self.eval_mode)
                 self.images[record].load(record, body_key, head_key, self.anno_root, PERSON_CLASSES, True)
         else:
+            with open(fpath, "r") as f:
+                lines = f.readlines()
+            records = [json.loads(line.strip('\n')) for line in lines]
             for record in records:
-                self.images[record["ID"]].load(record, body_key, head_key, PERSON_CLASSES, False)
+                self.images[record["ID"]].load(record, body_key, head_key, self.anno_root, PERSON_CLASSES, False)
                 self.images[record["ID"]].clip_all_boader()
 
     def compare(self, thres=0.5, matching=None):

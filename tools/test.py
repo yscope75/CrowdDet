@@ -117,7 +117,7 @@ def inference(config, network, model_file, device, dataset, start, end, result_q
         gt_boxes = gt_boxes[0].numpy()
         gt_boxes[:, 2:4] -= gt_boxes[:, :2]
         print(ID[0])
-        result_dict = dict(ID=ID, height=int(im_info[0, -3]), width=int(im_info[0, -2]),
+        result_dict = dict(ID=ID[0], height=int(im_info[0, -3]), width=int(im_info[0, -2]),
                 dtboxes=boxes_dump(pred_boxes), gtboxes=boxes_dump(gt_boxes))
         result_queue.put_nowait(result_dict)
 

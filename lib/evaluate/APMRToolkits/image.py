@@ -18,13 +18,19 @@ class Image(object):
         :meth: read the object from a dict
         """
         # if "ID" in record and self.ID is None:
-        self.ID = record['ID']
+        self.ID = record
         if "width" in record and self._width is None:
             self._width = record["width"]
         if "height" in record and self._height is None:
             self._height = record["height"]
         if gtflag:
             # self._gtNum = len(record["gtboxes"])
+            link_ann = os.path.join('../lib/data/WiderPerson/Annotations/', record+'.jpg.txt')
+            with open(link_ann, "r") as f:
+              first_line = f.readline()
+
+            self._gtNum = int(first_line.strip('\n'))
+            
             body_bbox, head_bbox = self.load_body_boxes(anno_root, record)
             if self.eval_mode == 0:
                 self.gtboxes = body_bbox
